@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Muvio Dhamaka</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:
+radial-gradient(circle at top right, rgba(0,140,255,0.08), transparent 25%),
+radial-gradient(circle at top left, rgba(0,207,255,0.06), transparent 22%),
+linear-gradient(180deg,#030712,#07111f,#020817,#01040b);
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+background:rgba(2,8,23,0.92);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+padding:18px 24px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:40px;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 8px 24px rgba(0,0,0,0.45);
+border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.logo{
+font-size:38px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+user-select:none;
+letter-spacing:0.5px;
+}
+
+.logo:hover{
+transform:scale(1.03);
+}
+
+.logo span{
+color:#00cfff;
+text-shadow:0 0 12px rgba(0,207,255,0.45);
+}
+
+/* PROFILE ICON */
+
+.profile{
+position:absolute;
+right:24px;
+width:46px;
+height:46px;
+border-radius:50%;
+background:linear-gradient(135deg,#0d203b,#071a33);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+border:1px solid #1c3d66;
+transition:0.3s;
+box-shadow:0 0 14px rgba(0,207,255,0.15);
+font-size:22px;
+}
+
+.profile:hover{
+transform:scale(1.08);
+background:linear-gradient(135deg,#00cfff,#0078ff);
+box-shadow:0 0 18px rgba(0,207,255,0.35);
+}
+
+/* SEARCH BAR */
+
+.search-bar{
+width:560px;
+max-width:100%;
+display:flex;
+position:relative;
+}
+
+.search-bar input{
+flex:1;
+padding:14px 16px;
+border:none;
+outline:none;
+border-radius:12px 0 0 12px;
+background:#08142b;
+color:white;
+font-size:15px;
+border:1px solid #16345c;
+border-right:none;
+transition:0.3s;
+}
+
+.search-bar input:focus{
+background:#0b1f3d;
+box-shadow:inset 0 0 0 1px rgba(0,207,255,0.2);
+}
+
+.search-bar input::placeholder{
+color:#9ab7d9;
+}
+
+.search-bar button{
+padding:14px 18px;
+border:none;
+background:linear-gradient(135deg,#00cfff,#0078ff);
+color:white;
+border-radius:0 12px 12px 0;
+cursor:pointer;
+font-weight:bold;
+border:1px solid #00cfff;
+transition:0.3s;
+}
+
+.search-bar button:hover{
+background:linear-gradient(135deg,#00e1ff,#005eff);
+box-shadow:0 0 14px rgba(0,207,255,0.35);
+}
+
+/* NAVBAR */
+
+.navbar{
+background:rgba(2,8,23,0.9);
+display:flex;
+padding:14px 16px;
+gap:15px;
+justify-content:center;
+flex-wrap:wrap;
+border-bottom:1px solid rgba(255,255,255,0.05);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+}
+
+.menu{
+position:relative;
+}
+
+.menu button{
+background:linear-gradient(135deg,#071a33,#020817);
+border:1px solid #16345c;
+padding:10px 16px;
+color:white;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.menu button:hover{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+border-color:#00cfff;
+transform:translateY(-2px);
+}
+
+.dropdown{
+display:none;
+position:absolute;
+background:#08142b;
+top:48px;
+left:0;
+width:220px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 8px 18px rgba(0,0,0,0.45);
+border:1px solid #16345c;
+z-index:999;
+}
+
+.dropdown a{
+color:white;
+padding:12px 14px;
+text-decoration:none;
+display:block;
+transition:0.2s;
+}
+
+.dropdown a:hover{
+background:#0d2a4d;
+}
+
+/* SECTION HEADINGS */
+
+.trending h2,
+.section-title,
+.search-result-title,
+.similar-title{
+font-size:30px;
+margin:0 0 18px 0;
+color:white;
+font-weight:700;
+letter-spacing:0.3px;
+}
+
+/* SEARCH RESULT */
+
+.search-result-wrapper{
+padding:30px 24px 10px 24px;
+}
+
+.search-result-box{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:10px 0 5px 0;
+}
+
+.search-result-box .movie{
+width:260px !important;
+max-width:260px;
+}
+
+/* SIMILAR SECTION */
+
+.similar-section{
+padding:26px 24px 8px 24px;
+}
+
+.similar-movies-grid{
+padding:0 24px 10px 24px;
+display:grid;
+grid-template-columns:repeat(5, minmax(0,1fr));
+gap:22px;
+}
+
+/* FILTER TITLE */
+
+.filter-title{
+margin:18px 24px 0 24px;
+padding:12px 18px;
+display:inline-block;
+background:linear-gradient(135deg,rgba(0,207,255,0.12),rgba(0,120,255,0.1));
+border:1px solid rgba(0,207,255,0.25);
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+color:#d9f7ff;
+box-shadow:0 4px 14px rgba(0,0,0,0.2);
+}
+
+/* TRENDING */
+
+.trending{
+padding:26px 24px 10px 24px;
+}
+
+.trend-row{
+display:flex;
+gap:18px;
+overflow-x:auto;
+padding-bottom:10px;
+scrollbar-width:thin;
+scrollbar-color:#00cfff #020817;
+}
+
+.trend-row::-webkit-scrollbar{
+height:8px;
+}
+
+.trend-row::-webkit-scrollbar-track{
+background:#020817;
+border-radius:20px;
+}
+
+.trend-row::-webkit-scrollbar-thumb{
+background:#00cfff;
+border-radius:20px;
+}
+
+.trend-card{
+min-width:210px;
+max-width:210px;
+background:linear-gradient(145deg,#071a33,#020817);
+border-radius:16px;
+overflow:hidden;
+border:1px solid rgba(255,255,255,0.06);
+transition:0.3s;
+box-shadow:0 8px 18px rgba(0,0,0,0.28);
+}
+
+.trend-card:hover{
+transform:translateY(-6px) scale(1.01);
+box-shadow:0 0 18px rgba(0,207,255,0.22);
+border-color:rgba(0,207,255,0.35);
+}
+
+.trend-card img{
+width:100%;
+height:300px;
+object-fit:cover;
+display:block;
+border-radius:10px;
+}
+
+.trend-info{
+padding:12px;
+text-align:center;
+}
+
+.trend-info h4{
+margin:0;
+font-size:15px;
+font-weight:bold;
+color:white;
+line-height:1.4;
+min-height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.trend-info p{
+margin:8px 0 0 0;
+font-size:13px;
+color:#ffd54a;
+}
+
+/* MOVIE GRID */
+
+.movies{
+padding:28px 24px 10px 24px;
+display:grid;
+grid-template-columns:repeat(5, minmax(0,1fr));
+gap:22px;
+}
+
+.movie{
+background:linear-gradient(145deg,#071a33,#020817);
+border-radius:16px;
+overflow:hidden;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.06);
+box-shadow:0 8px 18px rgba(0,0,0,0.28);
+min-width:0;
+}
+
+.movie:hover{
+transform:translateY(-6px) scale(1.01);
+box-shadow:0 0 18px rgba(0,207,255,0.22);
+border-color:rgba(0,207,255,0.35);
+}
+
+.movie img{
+width:100%;
+height:320px;
+object-fit:cover;
+display:block;
+border-radius:10px;
+background:#0b1320;
+}
+
+/* IMPORTANT FIX FOR SEARCH + SIMILAR MOVIES */
+.similar-movies-grid .movie img,
+.movies .movie img{
+aspect-ratio:2/3;
+height:320px;
+object-fit:cover;
+}
+
+.movie h3{
+font-size:16px;
+padding:12px 10px 6px 10px;
+text-align:center;
+margin:0;
+line-height:1.4;
+min-height:52px;
+display:flex;
+align-items:center;
+justify-content:center;
+word-break:break-word;
+}
+
+.movie p{
+text-align:center;
+color:#ffd54a;
+margin:0 0 10px 0;
+font-weight:bold;
+font-size:14px;
+}
+
+/* BUTTONS */
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:8px;
+margin:0 10px 14px 10px;
+flex-wrap:wrap;
+}
+
+.trailer,
+.favorite,
+.details{
+border:none;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.trailer{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+}
+
+.trailer:hover{
+transform:translateY(-2px);
+box-shadow:0 0 10px rgba(0,207,255,0.35);
+}
+
+.favorite{
+background:#08142b;
+font-size:16px;
+border:1px solid #16345c;
+}
+
+.favorite:hover{
+background:#0d2a4d;
+}
+
+.favorite.active{
+background:linear-gradient(135deg,#ff4b6e,#ff1744);
+border-color:#ff4b6e;
+box-shadow:0 0 12px rgba(255,75,110,0.3);
+}
+
+.details{
+background:#1a2c44;
+}
+
+.details:hover{
+background:#243f63;
+}
+
+/* PAGINATION FIX */
+
+.pagination{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+padding:30px 20px 40px 20px;
+}
+
+.page-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:44px;
+height:44px;
+padding:0 16px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+font-size:14px;
+background:linear-gradient(145deg,#071a33,#020817);
+color:white;
+border:1px solid #16345c;
+transition:0.3s;
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+.page-btn:hover{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+border-color:#00cfff;
+transform:translateY(-2px);
+}
+
+.page-btn.active{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+border-color:#00cfff;
+box-shadow:0 0 14px rgba(0,207,255,0.35);
+}
+
+.page-btn.disabled{
+opacity:0.45;
+cursor:not-allowed;
+pointer-events:none;
+}
+
+/* NO RESULTS */
+
+.no-results{
+margin:40px auto 60px auto;
+max-width:700px;
+text-align:center;
+padding:35px 20px;
+background:linear-gradient(145deg,#071a33,#020817);
+border-radius:18px;
+border:1px solid rgba(255,255,255,0.06);
+box-shadow:0 8px 18px rgba(0,0,0,0.28);
+}
+
+.no-results h2{
+font-size:32px;
+margin-bottom:10px;
+}
+
+.no-results p{
+color:#b7c8de;
+margin-bottom:18px;
+}
+
+.no-results button{
+border:none;
+padding:12px 20px;
+border-radius:10px;
+background:linear-gradient(135deg,#00cfff,#0078ff);
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* POPUP */
+
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+padding:20px;
+}
+
+#popup iframe{
+width:900px;
+max-width:90%;
+height:500px;
+border:none;
+border-radius:12px;
+background:black;
+box-shadow:0 0 25px rgba(0,207,255,0.35);
+}
+
+.close{
+position:absolute;
+top:22px;
+right:28px;
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
+color:white;
+background:rgba(255,255,255,0.08);
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+border:1px solid rgba(255,255,255,0.12);
+transition:0.3s;
+}
+
+.close:hover{
+background:#ff3b5c;
+transform:scale(1.08);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1400px){
+.movies,
+.similar-movies-grid{
+grid-template-columns:repeat(4, minmax(0,1fr));
+}
+}
+
+@media(max-width:1100px){
+.movies,
+.similar-movies-grid{
+grid-template-columns:repeat(3, minmax(0,1fr));
+}
+}
+
+@media(max-width:900px){
+.header{
+flex-wrap:wrap;
+justify-content:center;
+padding:16px 18px;
+gap:16px;
+}
+
+.profile{
+position:static;
+}
+
+.logo{
+font-size:30px;
+}
+
+.search-bar{
+width:100%;
+}
+
+.movies,
+.similar-movies-grid{
+grid-template-columns:repeat(2, minmax(0,1fr));
+}
+
+#popup iframe{
+height:360px;
+}
+}
+
+@media(max-width:560px){
+.movies,
+.similar-movies-grid{
+grid-template-columns:1fr;
+}
+
+.movie img,
+.similar-movies-grid .movie img,
+.movies .movie img{
+height:420px;
+}
+
+.trend-card{
+min-width:180px;
+max-width:180px;
+}
+
+.trend-card img{
+height:260px;
+}
+
+.page-btn{
+min-width:40px;
+height:40px;
+padding:0 12px;
+font-size:13px;
+}
+
+.search-result-title,
+.similar-title,
+.trending h2{
+font-size:24px;
+}
+}
+
+/* ================= 🔥 PREMIUM ENHANCEMENTS ================= */
+
+/* smooth feel */
+*{
+transition:all 0.25s ease;
+}
+
+/* ================= 🌌 BACKGROUND DEPTH ================= */
+
+body::before{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:radial-gradient(circle,#00cfff22,transparent);
+top:-150px;
+left:-150px;
+filter:blur(120px);
+z-index:-1;
+animation:floatGlow 12s infinite alternate;
+}
+
+@keyframes floatGlow{
+to{transform:translate(80px,60px);}
+}
+
+/* ================= ✨ HEADER ENHANCE ================= */
+
+.header{
+transition:0.3s;
+}
+
+.header:hover{
+box-shadow:0 0 30px rgba(0,207,255,0.2);
+}
+
+/* ================= 🔍 SEARCH PREMIUM ================= */
+
+.search-bar{
+box-shadow:0 0 10px rgba(0,207,255,0.1);
+}
+
+.search-bar input:focus{
+box-shadow:inset 0 0 10px rgba(0,207,255,0.3);
+}
+
+.search-bar:hover{
+transform:scale(1.02);
+}
+
+/* ================= 🎬 MOVIE CARD PRO ================= */
+
+.movie{
+position:relative;
+overflow:hidden;
+}
+
+/* glow border */
+.movie::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:16px;
+background:linear-gradient(120deg,transparent,#00cfff55,transparent);
+opacity:0;
+transition:0.4s;
+}
+
+.movie:hover::before{
+opacity:1;
+}
+
+/* shine sweep */
+.movie::after{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
+transition:0.6s;
+}
+
+.movie:hover::after{
+left:100%;
+}
+
+/* hover boost */
+.movie:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 0 22px rgba(0,207,255,0.25);
+}
+
+/* image zoom */
+.movie img{
+transition:0.5s;
+}
+
+.movie:hover img{
+transform:scale(1.08);
+}
+
+/* title glow */
+.movie:hover h3{
+color:#00e0ff;
+text-shadow:0 0 8px #00cfff;
+}
+
+/* ================= ❤️ FAVORITE ================= */
+
+.favorite.active{
+background:linear-gradient(135deg,#ff4b6e,#ff1744);
+box-shadow:0 0 12px rgba(255,75,110,0.4);
+transform:scale(1.1);
+}
+
+/* ================= 🎯 BUTTON EFFECT ================= */
+
+.trailer:hover,
+.details:hover{
+transform:translateY(-2px);
+box-shadow:0 0 10px rgba(0,207,255,0.3);
+}
+
+/* ================= 🎞 TRENDING ================= */
+
+.trend-card{
+transition:0.3s;
+}
+
+.trend-card:hover{
+transform:translateY(-6px) scale(1.03);
+box-shadow:0 0 18px rgba(0,207,255,0.25);
+}
+
+/* ================= 🔥 LOGO FIX + SHINE ================= */
+
+.logo span{
+background:linear-gradient(90deg,#00cfff,#ffffff,#00cfff);
+background-size:200%;
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+animation:shine 5s linear infinite;
+}
+
+@keyframes shine{
+to{background-position:200%;}
+}
+
+/* ================= 🎥 POPUP ================= */
+
+#popup iframe{
+animation:zoomIn 0.4s ease;
+}
+
+@keyframes zoomIn{
+from{transform:scale(0.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+/* ================= 🔥 SCROLLBAR ================= */
+
+::-webkit-scrollbar{
+height:8px;
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:linear-gradient(#00cfff,#0078ff);
+border-radius:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div style="display:flex; gap:20px; background:#111; padding:15px;">
+    <a href="/home" style="color:white;">Home</a>
+    <a href="/movie" style="color:white;">Movies</a>
+    <a href="/favorites" style="color:white;">Favorites</a>
+    <a href="/profile" style="color:white;">Profile</a>
+    <a href="/about" style="color:white;">About</a>
+    <a href="/logout" style="color:red;">Logout</a>
+</div>
+
+<div class="header">
+
+<div class="logo">
+🎬 Muvio<span>Dhamaka</span>
+</div>
+
+<form class="search-bar" action="/search" method="POST">
+<input name="movie" placeholder="Search movie..." autocomplete="off">
+<button type="submit">🔍</button>
+</form>
+
+<div class="profile" onclick="window.location.href='/profile'" title="My Profile">
+👤
+</div>
+
+</div>
+
+<div class="navbar">
+
+<div class="menu">
+<button onclick="window.location.href='/'">🏠 HOME</button>
+</div>
+
+<div class="menu">
+<button onclick="toggleMenu(this)">🏷 GENRE ▾</button>
+
+<div class="dropdown">
+<a href="/genre/Action">Action</a>
+<a href="/genre/Romance">Romance</a>
+<a href="/genre/Comedy">Comedy</a>
+<a href="/genre/Adventure">Adventure</a>
+<a href="/genre/Drama">Drama</a>
+<a href="/genre/Horror">Horror</a>
+</div>
+
+</div>
+
+<div class="menu">
+<button onclick="window.location.href='/genre/Animation'">✨ ANIMATION</button>
+</div>
+
+<div class="menu">
+<button onclick="toggleMenu(this)">📅 YEAR ▾</button>
+
+<div class="dropdown">
+<a href="/year/2026">2026</a>
+<a href="/year/2025">2025</a>
+<a href="/year/2024">2024</a>
+<a href="/year/2023">2023</a>
+<a href="/year/2022">2022</a>
+<a href="/year/2021">2021</a>
+<a href="/year/2020">2020</a>
+</div>
+
+</div>
+
+<div class="menu">
+<button onclick="window.location.href='/favorites'">❤️ FAVORITES</button>
+</div>
+
+<div class="menu">
+<button onclick="window.location.href='/about'">ℹ️ ABOUT</button>
+</div>
+
+</div>
+
+<!-- SEARCH RESULT -->
+
+{% if main_movie is not none %}
+
+<div class="search-result-wrapper">
+
+<h2 class="search-result-title">🎬 Your Search Movie</h2>
+
+<div class="search-result-box">
+<div class="movie" style="width:260px;">
+
+<img src="{{ main_movie.poster if main_movie.poster else 'https://via.placeholder.com/300x450?text=No+Poster' }}" alt="{{ main_movie.title }}">
+<h3>{{ main_movie.title }}</h3>
+<p>IMDb ⭐ {{ "%.1f"|format(main_movie.vote_average) if main_movie.vote_average is not none else 'N/A' }}</p>
+
+<div class="buttons">
+<button class="trailer" onclick="playTrailer('{{ main_movie.title|escape }}')">Trailer</button>
+<button class="details" onclick="window.location.href='/movie/{{ main_movie.title|urlencode }}'">Details</button>
+</div>
+
+</div>
+</div>
+
+</div>
+
+{% endif %}
+
+<!-- SIMILAR MOVIES -->
+
+{% if similar_movies %}
+
+<div class="similar-section">
+<h2 class="similar-title">🔥 Similar Movies</h2>
+</div>
+
+<div class="similar-movies-grid">
+
+{% for movie in similar_movies %}
+
+<div class="movie">
+
+<a href="/movie/{{ movie.title|urlencode }}">
+<img loading="lazy" src="{{ movie.poster if movie.poster else 'https://via.placeholder.com/300x450?text=No+Poster' }}" alt="{{ movie.title }}">
+</a>
+
+<h3>{{ movie.title }}</h3>
+<p>IMDb ⭐ {{ "%.1f"|format(movie.vote_average) if movie.vote_average is not none else 'N/A' }}</p>
+
+<div class="buttons">
+<button class="trailer" onclick="playTrailer('{{ movie.title|escape }}')">Trailer</button>
+<button class="favorite" onclick="saveFavorite('{{ movie.title|escape }}',this)">❤</button>
+<button class="details" onclick="window.location.href='/movie/{{ movie.title|urlencode }}'">Details</button>
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+<!-- TRENDING MOVIES -->
+{% if page == 1 and show_trending and trending is not none and trending|length > 0 %}
+
+<div class="trending">
+
+<h2>🔥 Trending Movies</h2>
+
+<div class="trend-row">
+
+{% for movie in trending.itertuples() %}
+
+<div class="trend-card">
+
+<a href="{{ url_for('movie_detail', title=movie.title) }}">
+
+<img 
+src="{{ movie.poster if movie.poster else 'https://via.placeholder.com/300x450?text=No+Poster' }}" 
+alt="{{ movie.title }}">
+
+</a>
+
+<div class="trend-info">
+
+<h4>{{ movie.title }}</h4>
+
+<p>
+⭐ Rating 
+{% if movie.vote_average is not none %}
+{{ "%.1f"|format(movie.vote_average) }}
+{% else %}
+N/A
+{% endif %}
+</p>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endif %}
+
+
+<!-- FILTER TITLE -->
+{% if current_filter %}
+<div class="filter-title">
+{{ current_filter }}
+</div>
+{% endif %}
+
+<!-- ALL MOVIES -->
+
+{% if movies is not none and movies|length > 0 %}
+
+<div class="movies">
+
+{% for movie in movies.itertuples() %}
+
+<div class="movie">
+
+<a href="{{ url_for('movie_detail', title=movie.title) }}">
+<img 
+loading="lazy"
+src="{{ movie.poster if movie.poster else 'https://via.placeholder.com/300x450?text=No+Poster' }}" 
+alt="{{ movie.title }}">
+</a>
+
+<h3 title="{{ movie.title }}">{{ movie.title }}</h3>
+
+<p>
+IMDb ⭐ 
+{% if movie.vote_average is not none %}
+{{ "%.1f"|format(movie.vote_average) }}
+{% else %}
+N/A
+{% endif %}
+</p>
+
+<div class="buttons">
+
+<button class="trailer"
+onclick="playTrailer('{{ movie.title|escape }}')">
+▶ Trailer
+</button>
+
+<button class="favorite"
+onclick="saveFavorite('{{ movie.title|escape }}', this)">
+❤ Favorite
+</button>
+
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+{% if main_movie is none %}
+
+<div class="no-results">
+
+<h2>No movies found</h2>
+
+<p>Try another filter or go back to the homepage.</p>
+
+<button onclick="window.location.href='/'">
+🏠 Back to Home
+</button>
+
+</div>
+
+{% endif %}
+
+{% endif %}
+
+<!-- PAGINATION -->
+
+{% if total_pages > 1 and main_movie is none %}
+
+<div class="pagination">
+
+{% if page > 1 %}
+<a href="/?page=1" class="page-btn">First</a>
+{% endif %}
+
+{% if page > 1 %}
+<a href="/?page={{ page - 1 }}" class="page-btn">Previous</a>
+{% else %}
+<span class="page-btn disabled">Previous</span>
+{% endif %}
+
+{% for p in range(start_page, end_page + 1) %}
+{% if p == page %}
+<span class="page-btn active">{{ p }}</span>
+{% else %}
+<a href="/?page={{ p }}" class="page-btn">{{ p }}</a>
+{% endif %}
+{% endfor %}
+
+{% if page < total_pages %}
+<a href="/?page={{ page + 1 }}" class="page-btn">Next</a>
+{% else %}
+<span class="page-btn disabled">Next</span>
+{% endif %}
+
+</div>
+
+{% endif %}
+
+<!-- TRAILER POPUP -->
+<div id="popup">
+<div class="close" onclick="closeTrailer()">✖</div>
+<iframe id="trailer" allowfullscreen></iframe>
+</div>
+
+<script>
+
+/* ================= ❤️ FAVORITE ================= */
+
+function saveFavorite(title, btn){
+btn.classList.toggle("active");
+
+fetch("/favorite",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({title:title})
+});
+}
+
+/* ================= 🎬 TRAILER (CINEMATIC) ================= */
+
+function playTrailer(title){
+let popup = document.getElementById("popup");
+let iframe = document.getElementById("trailer");
+
+popup.style.display = "flex";
+popup.style.opacity = "0";
+
+setTimeout(()=>{
+popup.style.opacity = "1";
+},50);
+
+let query = encodeURIComponent(title + " trailer");
+iframe.src = "https://www.youtube.com/embed?listType=search&list=" + query;
+}
+
+function closeTrailer(){
+let popup = document.getElementById("popup");
+popup.style.opacity = "0";
+
+setTimeout(()=>{
+popup.style.display = "none";
+document.getElementById("trailer").src = "";
+},200);
+}
+
+/* ================= 🎯 DROPDOWN ================= */
+
+function toggleMenu(btn){
+let dropdown = btn.nextElementSibling;
+
+document.querySelectorAll(".dropdown").forEach(d=>{
+if(d !== dropdown){
+d.style.display = "none";
+}
+});
+
+dropdown.style.display =
+dropdown.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click",function(e){
+if(!e.target.closest(".menu")){
+document.querySelectorAll(".dropdown").forEach(d=>{
+d.style.display = "none";
+});
+}
+});
+
+/* ================= 🔥 SCROLL REVEAL (SMOOTH) ================= */
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{threshold:0.15});
+
+document.querySelectorAll(".movie, .trend-card").forEach(el=>{
+el.classList.add("fade-in");
+observer.observe(el);
+});
+
+/* ================= ⚡ PARALLAX (CONTROLLED) ================= */
+
+document.querySelectorAll(".movie").forEach(card=>{
+
+card.addEventListener("mousemove",(e)=>{
+let rect = card.getBoundingClientRect();
+
+let x = e.clientX - rect.left;
+let y = e.clientY - rect.top;
+
+let midX = rect.width / 2;
+let midY = rect.height / 2;
+
+let rotateX = -(y - midY) / 20;
+let rotateY = (x - midX) / 20;
+
+card.style.transform =
+`scale(1.04) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+card.addEventListener("mouseleave",()=>{
+card.style.transform = "scale(1)";
+});
+
+});
+
+/* ================= 🎯 BUTTON RIPPLE ================= */
+
+document.querySelectorAll(".trailer, .details").forEach(btn=>{
+
+btn.addEventListener("click",function(e){
+
+let ripple = document.createElement("span");
+
+ripple.style.position = "absolute";
+ripple.style.width = "100px";
+ripple.style.height = "100px";
+ripple.style.background = "rgba(255,255,255,0.3)";
+ripple.style.borderRadius = "50%";
+ripple.style.transform = "scale(0)";
+ripple.style.left = e.offsetX + "px";
+ripple.style.top = e.offsetY + "px";
+ripple.style.pointerEvents = "none";
+
+this.appendChild(ripple);
+
+ripple.animate([
+{transform:"scale(0)", opacity:1},
+{transform:"scale(3)", opacity:0}
+],{
+duration:600
+});
+
+setTimeout(()=>ripple.remove(),600);
+
+});
+
+});
+
+/* ================= 🔥 HEADER SCROLL EFFECT ================= */
+
+window.addEventListener("scroll",()=>{
+const header = document.querySelector(".header");
+
+if(window.scrollY > 50){
+header.style.background = "rgba(2,8,23,0.98)";
+header.style.boxShadow = "0 0 25px rgba(0,207,255,0.25)";
+}else{
+header.style.background = "rgba(2,8,23,0.92)";
+header.style.boxShadow = "";
+}
+});
+
+/* ================= 🎬 POPUP OUTSIDE CLICK ================= */
+
+document.getElementById("popup").addEventListener("click",(e)=>{
+if(e.target.id === "popup"){
+closeTrailer();
+}
+});
+
+/* ================= ⚡ TREND SCROLL AUTO ================= */
+
+const trendRow = document.querySelector(".trend-row");
+
+if(trendRow){
+let scrollAmount = 0;
+
+setInterval(()=>{
+scrollAmount += 220;
+
+if(scrollAmount >= trendRow.scrollWidth){
+scrollAmount = 0;
+}
+
+trendRow.scrollTo({
+left: scrollAmount,
+behavior: "smooth"
+});
+},3000);
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muvio Dhamaka - About</title>
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:#020817;
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* 🔥 ANIMATED BACKGROUND GRADIENT */
+body{
+background:linear-gradient(-45deg,#020817,#07132a,#020817,#0a1f44);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* GLOW BLOBS */
+body::before, body::after{
+content:'';
+position:fixed;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+animation:float 10s ease-in-out infinite alternate;
+}
+
+body::before{
+width:500px;
+height:500px;
+background:#00cfff55;
+top:-150px;
+left:-150px;
+}
+
+body::after{
+width:400px;
+height:400px;
+background:#0078ff55;
+bottom:-150px;
+right:-150px;
+}
+
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(50px);}
+}
+
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 40px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(20px);
+position:sticky;
+top:0;
+z-index:10;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+/* LOGO ANIMATION */
+.logo{
+font-size:32px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.logo:hover{
+transform:scale(1.1);
+text-shadow:0 0 20px #00cfff;
+}
+
+.logo span{
+color:#00cfff;
+text-shadow:0 0 15px #00cfff;
+}
+
+/* BUTTON */
+.back-btn{
+padding:12px 22px;
+border-radius:30px;
+background:linear-gradient(135deg,#00cfff,#0078ff);
+border:none;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+.back-btn::after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,#fff,transparent);
+left:-100%;
+top:0;
+}
+
+.back-btn:hover::after{
+left:100%;
+transition:0.6s;
+}
+
+.back-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 25px #00cfff;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:100px 20px 40px;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:15px;
+animation:fadeUp 1s ease;
+}
+
+.hero h1 span{
+color:#00cfff;
+text-shadow:0 0 20px #00cfff;
+}
+
+.hero p{
+color:#cbd5e1;
+max-width:700px;
+margin:auto;
+line-height:1.8;
+animation:fadeUp 1.4s ease;
+}
+
+/* FADE */
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* SECTION SCROLL ANIMATION */
+.section{
+max-width:1200px;
+margin:auto;
+padding:50px 20px;
+opacity:0;
+transform:translateY(50px);
+transition:1s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.section h2{
+font-size:34px;
+margin-bottom:20px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+/* CARD (UPGRADED) */
+.card{
+position:relative;
+padding:25px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+transition:0.4s;
+overflow:hidden;
+}
+
+.card::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,transparent,#00cfff55,transparent);
+opacity:0;
+transition:0.5s;
+}
+
+.card:hover::before{
+opacity:1;
+}
+
+.card:hover{
+transform:translateY(-12px) scale(1.05);
+box-shadow:0 0 40px rgba(0,207,255,0.4);
+}
+
+.card-icon{
+font-size:30px;
+margin-bottom:10px;
+}
+
+/* TECH STACK */
+.stack{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.stack span{
+padding:10px 18px;
+border-radius:30px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+transition:0.3s;
+}
+
+.stack span:hover{
+background:#00cfff;
+color:black;
+transform:scale(1.15) rotate(3deg);
+box-shadow:0 0 15px #00cfff;
+}
+
+/* DEV CARD */
+.dev-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+transition:0.4s;
+flex-wrap:wrap;
+}
+
+.dev-card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 40px rgba(0,207,255,0.35);
+}
+
+/* BUTTONS */
+.dev-btn{
+padding:12px 20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+transition:0.3s;
+}
+
+.dev-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 20px rgba(255,255,255,0.3);
+}
+
+/* FOOTER */
+.footer{
+text-align:center;
+padding:40px;
+color:#94a3b8;
+opacity:0.7;
+}
+
+.section{
+padding:60px 8%;
+}
+
+.section-title{
+font-size:34px;
+margin-bottom:25px;
+
+background: linear-gradient(90deg, #00cfff, #ffffff);
+background-clip: text;
+-webkit-background-clip: text;
+
+color: transparent;
+-webkit-text-fill-color: transparent;
+}
+
+/* CARD */
+.dev-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:40px;
+
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter:blur(18px);
+padding:35px;
+border-radius:20px;
+
+transition:0.4s;
+}
+
+.dev-card:hover{
+transform:translateY(-8px) scale(1.01);
+box-shadow:0 20px 60px rgba(0,207,255,0.25);
+}
+
+/* LEFT */
+.dev-left{
+flex:2;
+}
+
+.dev-badge{
+display:inline-block;
+padding:6px 14px;
+border-radius:20px;
+font-size:12px;
+letter-spacing:1px;
+background:#00cfff;
+color:#000;
+margin-bottom:10px;
+}
+
+.dev-name{
+font-size:30px;
+font-weight:800;
+margin-bottom:15px;
+}
+
+/* TEXT */
+.dev-text{
+font-size:15px;
+line-height:1.7;
+color:#ddd;
+}
+
+.highlight{
+color:#00cfff;
+font-weight:600;
+}
+
+.brand{
+color:#fff;
+}
+
+/* SKILLS */
+.skills{
+margin-top:15px;
+}
+
+.skills span{
+display:inline-block;
+margin:5px;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+background:rgba(0,207,255,0.15);
+border:1px solid rgba(0,207,255,0.3);
+}
+
+/* RIGHT */
+.dev-right{
+flex:1;
+display:flex;
+flex-direction:column;
+gap:15px;
+align-items:center;
+}
+
+/* BUTTON */
+.dev-btn{
+width:160px;
+text-align:center;
+padding:12px;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+}
+
+/* LinkedIn */
+.linkedin{
+background:#0077b5;
+color:white;
+}
+
+.linkedin:hover{
+background:#00a0dc;
+transform:scale(1.05);
+}
+
+/* GitHub */
+.github{
+background:#111;
+color:white;
+border:1px solid #444;
+}
+
+.github:hover{
+background:#222;
+transform:scale(1.05);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+.dev-card{
+flex-direction:column;
+text-align:center;
+}
+
+.dev-right{
+flex-direction:row;
+}
+}
+
+.dev-name{
+position:relative;
+}
+
+.dev-name::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-5px;
+width:50%;
+height:3px;
+background:#00cfff;
+box-shadow:0 0 15px #00cfff;
+animation:glowLine 2s infinite alternate;
+}
+
+@keyframes glowLine{
+from{width:40%;}
+to{width:70%;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div style="display:flex; gap:20px; background:#111; padding:15px;">
+    <a href="/home" style="color:white;">Home</a>
+    <a href="/movie" style="color:white;">Movies</a>
+    <a href="/favorites" style="color:white;">Favorites</a>
+    <a href="/profile" style="color:white;">Profile</a>
+    <a href="/about" style="color:white;">About</a>
+    <a href="/logout" style="color:red;">Logout</a>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="logo" onclick="window.location.href='/'">
+🎬 Muvio<span>Dhamaka</span>
+</div>
+
+<button class="back-btn" onclick="window.location.href='/'">
+⬅ Back
+</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+<h1>About <span>MuvioDhamaka</span></h1>
+<p>
+Muvio Dhamaka is a smart movie recommendation platform designed to help users discover movies quickly with a modern UI and intelligent filtering system.
+</p>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+<h2>✨ Features</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-icon">🎬</div>
+<h3>Search</h3>
+<p>Instant movie search with clean UI.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🔥</div>
+<h3>Trending</h3>
+<p>Explore popular movies easily.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🎯</div>
+<h3>Recommendations</h3>
+<p>Smart suggestions using ML model.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">❤️</div>
+<h3>Favorites</h3>
+<p>Save movies for later.</p>
+</div>
+
+</div>
+</div>
+
+<!-- TECH -->
+<div class="section">
+<h2>🛠 Tech Stack</h2>
+
+<div class="stack">
+<span>Python</span>
+<span>Flask</span>
+<span>Pandas</span>
+<span>NumPy</span>
+<span>HTML</span>
+<span>CSS</span>
+<span>JavaScript</span>
+</div>
+</div>
+
+<!-- DEVELOPER -->
+<div class="section">
+<h2 class="section-title">💀 Developer</h2>
+
+<div class="dev-card">
+
+    <!-- LEFT SIDE -->
+    <div class="dev-left">
+        <div class="dev-badge">CREATOR</div>
+
+        <h3 class="dev-name">Shraiyansh</h3>
+
+        <p class="dev-text">
+            Hi, I'm <strong>Shraiyansh</strong> — a passionate 
+            <span class="highlight">Data Science Engineer</span> focused on 
+            <span class="highlight">Machine Learning</span> and intelligent systems.
+            <br><br>
+            <strong class="brand">Muvio Dhamaka</strong> is a smart movie recommendation platform 
+            powered by ML algorithms that analyze user behavior and similarity patterns 
+            to deliver highly personalized movie suggestions.
+            <br><br>
+            This project reflects my expertise in 
+            <span class="highlight">AI, Data Analysis, and Full Stack Development</span> 
+            with a focus on performance and user experience.
+        </p>
+
+        <!-- SKILLS TAGS -->
+        <div class="skills">
+            <span>Python</span>
+            <span>Machine Learning</span>
+            <span>Flask</span>
+            <span>AI Systems</span>
+            <span>Data Science</span>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="dev-right">
+        <a href="https://www.linkedin.com/in/shraiyansh-vishwakarma-b0025b30b/" class="dev-btn linkedin" target="_blank">LinkedIn</a>
+        <a href="https://github.com/shraiyansh474?tab=repositories" class="dev-btn github" target="_blank">GitHub</a>
+    </div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+Made with ❤️ by Shraiyansh | Muvio Dhamaka
+</div>
+
+<script>
+
+/* SCROLL ANIMATION */
+const sections=document.querySelectorAll(".section");
+
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+const top=sec.getBoundingClientRect().top;
+if(top<window.innerHeight-100){
+sec.classList.add("show");
+}
+});
+});
+
+</script>
+
+</body>
+</html>

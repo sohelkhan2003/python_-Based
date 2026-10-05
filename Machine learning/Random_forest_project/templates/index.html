@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supply Chain Risk Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(90deg, #ff512f, #dd2476);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p.intro {
+            text-align: center;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-top: 15px;
+            display: block;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #764ba2;
+            outline: none;
+            box-shadow: 0 0 8px rgba(118,75,162,0.3);
+        }
+
+        .range-info {
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(90deg, #36d1dc, #5b86e5);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            margin-top: 35px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f4f6ff;
+        }
+
+        .high { color: #e74c3c; font-weight: bold; font-size: 20px; }
+        .moderate { color: #f39c12; font-weight: bold; font-size: 20px; }
+        .low { color: #27ae60; font-weight: bold; font-size: 20px; }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚚 Supply Chain Risk Checker</h1>
+    <p class="intro">Smart AI-powered Logistics Risk Prediction</p>
+
+    <form method="POST" action="/">
+
+        <label>Traffic Congestion Level</label>
+        <input type="number" name="traffic_congestion_level" min="0" max="10" required>
+        <div class="range-info">Allowed Range: 0 – 10</div>
+
+        <label>Weather Severity</label>
+        <input type="number" name="weather_condition_severity" min="0" max="10" required>
+        <div class="range-info">Allowed Range: 0 – 10</div>
+
+        <label>Port Congestion</label>
+        <input type="number" name="port_congestion_level" min="0" max="10" required>
+
+        <label>Route Risk Level</label>
+        <input type="number" name="route_risk_level" min="0" max="10" required>
+
+        <label>Disruption Likelihood (0-1)</label>
+        <input type="number" step="0.01" min="0" max="1" name="disruption_likelihood_score" required>
+        <div class="range-info">Allowed Range: 0 – 1</div>
+
+        <label>Supplier Reliability (0-1)</label>
+        <input type="number" step="0.01" min="0" max="1" name="supplier_reliability_score" required>
+        <div class="range-info">Allowed Range: 0 – 1</div>
+
+        <!-- ✅ UPDATED ETA RANGE -->
+        <label>ETA Variation (hours)</label>
+        <input type="number" 
+               name="eta_variation_hours"
+               min="-24"
+               max="24"
+               step="1"
+               required>
+        <div class="range-info">Allowed Range: -24 to +24 hours</div>
+
+        <label>Fuel Consumption Rate</label>
+        <input type="number" name="fuel_consumption_rate" min="5" max="20" required>
+        <div class="range-info">Allowed Range: 5 – 20</div>
+
+        <button type="submit">🔍 Check Risk Level</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h2>📊 Prediction Result</h2>
+
+        <p>
+            Risk Level:
+            <span class="{% if prediction.risk_class == 'High Risk' %}high
+                         {% elif prediction.risk_class == 'Moderate Risk' %}moderate
+                         {% else %}low{% endif %}">
+                {{ prediction.risk_class }}
+            </span>
+            <br>
+            Confidence: <strong>{{ prediction.probability }}%</strong>
+        </p>
+
+        <h3>✅ Suggested Actions:</h3>
+        <ul>
+            {% for sug in prediction.suggestions %}
+            <li>{{ sug }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

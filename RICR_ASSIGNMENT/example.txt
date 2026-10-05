@@ -1,0 +1,2 @@
+'orange' with 100 
+ mango ,quantity :40

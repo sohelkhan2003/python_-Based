@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Muvio Dhamaka Account</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+color:white;
+overflow:hidden;
+
+/* 🔥 animated bg */
+background:linear-gradient(-45deg,#020817,#07132a,#020817,#0a1f44);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* IMAGE BG */
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba") center/cover no-repeat;
+opacity:0.25;
+z-index:-2;
+}
+
+/* DARK OVERLAY */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.75);
+z-index:-1;
+}
+
+/* FLOATING GLOW */
+.glow{
+position:fixed;
+width:300px;
+height:300px;
+background:#00cfff55;
+filter:blur(120px);
+border-radius:50%;
+top:10%;
+left:10%;
+animation:float 8s infinite alternate;
+z-index:-1;
+}
+
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(60px);}
+}
+
+/* CONTAINER */
+.container{
+max-width:420px;
+margin:auto;
+padding-top:80px;
+animation:fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* LOGO */
+.logo{
+text-align:center;
+font-size:44px;
+font-weight:bold;
+margin-bottom:5px;
+color:#00cfff;
+text-shadow:0 0 20px #00cfff;
+transition:0.3s;
+}
+
+.logo:hover{
+transform:scale(1.08);
+}
+
+.logo span{
+color:#00e0ff;
+}
+
+.tagline{
+text-align:center;
+color:#a8c7e6;
+margin-bottom:30px;
+}
+
+/* CARD */
+.card{
+backdrop-filter:blur(20px);
+background:rgba(10,20,40,0.6);
+padding:30px;
+border-radius:16px;
+box-shadow:0 0 30px rgba(0,191,255,0.25);
+margin-bottom:25px;
+border:1px solid rgba(255,255,255,0.08);
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 40px rgba(0,191,255,0.4);
+}
+
+/* HEADINGS */
+h1,h2{
+text-align:center;
+margin-bottom:25px;
+color:#00cfff;
+text-shadow:0 0 10px #00cfff;
+}
+
+/* INFO */
+.info{
+margin-bottom:15px;
+font-size:18px;
+}
+
+.label{
+color:#a8c7e6;
+}
+
+.value{
+font-weight:bold;
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:8px;
+background:#0c1f35;
+color:white;
+outline:none;
+border:1px solid #1c3554;
+transition:0.3s;
+}
+
+input:focus{
+border-color:#00cfff;
+box-shadow:0 0 12px rgba(0,191,255,0.5);
+transform:scale(1.02);
+}
+
+/* BUTTON */
+button{
+width:100%;
+padding:12px;
+margin-top:18px;
+border:none;
+border-radius:8px;
+background:linear-gradient(135deg,#00cfff,#0078ff);
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+/* shine effect */
+button::after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,#fff,transparent);
+left:-100%;
+top:0;
+}
+
+button:hover::after{
+left:100%;
+transition:0.6s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(0,191,255,0.5);
+}
+
+.logout{
+background:#10243c;
+border:1px solid #1c3554;
+}
+
+.logout:hover{
+background:#16304d;
+}
+
+/* LINK */
+.link{
+text-align:center;
+margin-top:15px;
+color:#a8c7e6;
+}
+
+.link a{
+color:#00cfff;
+cursor:pointer;
+text-decoration:none;
+transition:0.3s;
+}
+
+.link a:hover{
+text-decoration:underline;
+color:#00eaff;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<div class="container">
+
+<div class="logo">🎬 Muvio<span>Dhamaka</span></div>
+<div class="tagline">Find Your Next Movie</div>
+
+{% if user %}
+
+<h1>👤 User Profile</h1>
+
+<div class="card">
+
+<div class="info">
+<span class="label">Username:</span>
+<span class="value">{{user.username}}</span>
+</div>
+
+<div class="info">
+<span class="label">Email:</span>
+<span class="value">{{user.email}}</span>
+</div>
+
+<div class="info">
+<span class="label">Favorite Movies:</span>
+<span class="value">{{user.favorites}}</span>
+</div>
+
+<a href="/logout">
+<button class="logout">Logout</button>
+</a>
+
+</div>
+
+{% else %}
+
+<div class="card" id="loginBox">
+
+<h2>Login</h2>
+
+<form method="POST" action="/login">
+<input type="text" name="username" placeholder="Username" required>
+<input type="password" name="password" placeholder="Password" required>
+<button type="submit">Login</button>
+</form>
+
+<div class="link">
+Don't have an account?
+<a onclick="showSignup()">Signup</a>
+</div>
+
+</div>
+
+<div class="card" id="signupBox" style="display:none">
+
+<h2>Create Account</h2>
+
+<form method="POST">
+<input type="text" name="username" placeholder="Username" required>
+<input type="email" name="email" placeholder="Email" required>
+<input type="password" name="password" placeholder="Password" required>
+<button type="submit">Create Account</button>
+</form>
+
+<div class="link">
+Already have account?
+<a onclick="showLogin()">Login</a>
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+<script>
+
+function showSignup(){
+document.getElementById("loginBox").style.display="none"
+document.getElementById("signupBox").style.display="block"
+}
+
+function showLogin(){
+document.getElementById("signupBox").style.display="none"
+document.getElementById("loginBox").style.display="block"
+}
+
+</script>
+
+</body>
+</html>

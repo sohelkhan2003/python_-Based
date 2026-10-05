@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>My Profile | Muvio Dhamaka</title>
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family: 'Segoe UI', Arial, sans-serif;
+background:
+radial-gradient(circle at 20% 10%, rgba(0,180,255,0.08), transparent 25%),
+radial-gradient(circle at 80% 0%, rgba(0,120,255,0.06), transparent 30%),
+linear-gradient(180deg,#040b18,#060f1f,#02060f);
+color:white;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+background:rgba(5,12,25,0.85);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+padding:18px 24px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 8px 25px rgba(0,0,0,0.6);
+border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.logo{
+font-size:34px;
+font-weight:800;
+cursor:pointer;
+transition:0.3s;
+
+/* fallback color (important) */
+color:#00cfff;
+
+/* gradient text */
+background:linear-gradient(90deg,#00cfff,#ffffff);
+-webkit-background-clip:text;
+background-clip:text;
+
+/* chrome / safari support */
+-webkit-text-fill-color:transparent;
+
+/* fix rendering issues */
+display:inline-block;
+}
+
+.logo:hover{
+transform:scale(1.05);
+filter:brightness(1.2);
+}
+
+.logo span{
+color:#00cfff;
+text-shadow:0 0 10px rgba(0,200,255,0.5);
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+background:rgba(255,255,255,0.05);
+color:white;
+border:1px solid rgba(255,255,255,0.08);
+padding:11px 18px;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+font-weight:bold;
+transition:0.3s;
+backdrop-filter:blur(6px);
+}
+
+.back-btn:hover{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+border-color:#00cfff;
+transform:translateY(-2px);
+box-shadow:0 0 15px rgba(0,200,255,0.4);
+}
+
+/* MAIN */
+
+.container{
+max-width:1100px;
+margin:40px auto;
+padding:20px;
+}
+
+/* HERO CARD */
+
+.profile-hero{
+position:relative;
+background:linear-gradient(145deg,#0c1a2b,#081220);
+border-radius:26px;
+padding:36px 30px;
+box-shadow:
+0 0 30px rgba(0,140,255,0.08),
+0 15px 40px rgba(0,0,0,0.6);
+border:1px solid rgba(255,255,255,0.04);
+overflow:hidden;
+margin-bottom:28px;
+transition:0.4s;
+}
+
+.profile-hero:hover{
+transform:translateY(-3px);
+box-shadow:0 0 30px rgba(0,180,255,0.2);
+}
+
+.profile-hero::before{
+content:"";
+position:absolute;
+top:-80px;
+right:-80px;
+width:250px;
+height:250px;
+background:radial-gradient(circle, rgba(0,200,255,0.25), transparent 70%);
+border-radius:50%;
+filter:blur(10px);
+}
+
+/* TOP */
+
+.profile-top{
+position:relative;
+z-index:2;
+display:flex;
+align-items:center;
+gap:24px;
+flex-wrap:wrap;
+}
+
+/* AVATAR */
+
+.avatar{
+width:110px;
+height:110px;
+border-radius:50%;
+background:linear-gradient(135deg,#00cfff,#0066ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:44px;
+font-weight:bold;
+box-shadow:
+0 0 0 6px rgba(0,180,255,0.15),
+0 0 25px rgba(0,180,255,0.5);
+transition:0.4s;
+}
+
+.avatar:hover{
+transform:scale(1.08) rotate(3deg);
+}
+
+/* PROFILE TEXT */
+
+.profile-name{
+margin:0;
+font-size:38px;
+font-weight:800;
+letter-spacing:0.4px;
+
+/* fallback color (important) */
+color:#00cfff;
+
+/* gradient text */
+background:linear-gradient(90deg,#00cfff,#ffffff);
+-webkit-background-clip:text;
+background-clip:text;
+
+/* for chrome/safari */
+-webkit-text-fill-color:transparent;
+
+/* for safety */
+display:inline-block;
+}
+
+.profile-email{
+margin:10px 0 0 0;
+font-size:15px;
+color:#9fb6d1;
+}
+
+/* BADGES */
+
+.profile-badges{
+margin-top:16px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.badge{
+padding:8px 14px;
+border-radius:30px;
+background:rgba(0,180,255,0.08);
+border:1px solid rgba(0,180,255,0.25);
+color:#cfeeff;
+font-size:13px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.badge:hover{
+background:rgba(0,180,255,0.2);
+transform:translateY(-2px);
+}
+
+/* STATS */
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+margin-bottom:24px;
+}
+
+.stat-card{
+background:linear-gradient(145deg,#0c1a2b,#081220);
+padding:22px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,0.04);
+transition:0.3s;
+box-shadow:0 10px 20px rgba(0,0,0,0.5);
+}
+
+.stat-card:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:0 0 20px rgba(0,180,255,0.4);
+border-color:#00cfff;
+}
+
+.stat-title{
+font-size:14px;
+color:#00cfff;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.stat-value{
+font-size:30px;
+font-weight:800;
+}
+
+/* SECTION */
+
+.section-card{
+background:linear-gradient(145deg,#0c1a2b,#081220);
+border-radius:22px;
+padding:26px;
+box-shadow:
+0 0 18px rgba(0,180,255,0.05),
+0 12px 30px rgba(0,0,0,0.5);
+border:1px solid rgba(255,255,255,0.04);
+margin-bottom:24px;
+transition:0.3s;
+}
+
+.section-card:hover{
+box-shadow:0 0 20px rgba(0,180,255,0.25);
+}
+
+.section-title{
+font-size:24px;
+font-weight:bold;
+color:#00cfff;
+margin-bottom:18px;
+}
+
+/* INFO */
+
+.info-card{
+background:linear-gradient(145deg,#0e1e33,#081220);
+padding:20px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,0.04);
+transition:0.3s;
+}
+
+.info-card:hover{
+transform:translateY(-4px);
+box-shadow:0 0 14px rgba(0,180,255,0.3);
+border-color:#00cfff;
+}
+
+.info-label{
+font-size:13px;
+color:#00cfff;
+margin-bottom:8px;
+}
+
+.info-value{
+font-size:17px;
+font-weight:bold;
+}
+
+/* BUTTONS */
+
+.btn{
+padding:13px 22px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+font-size:14px;
+font-weight:bold;
+transition:0.3s;
+min-width:150px;
+}
+
+.btn-home{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.btn-home:hover{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+transform:translateY(-3px);
+}
+
+.btn-fav{
+background:linear-gradient(135deg,#00cfff,#0078ff);
+box-shadow:0 0 14px rgba(0,180,255,0.5);
+}
+
+.btn-fav:hover{
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 0 20px rgba(0,180,255,0.7);
+}
+
+.btn-logout{
+background:#0d1b2a;
+border:1px solid rgba(255,255,255,0.05);
+}
+
+.btn-logout:hover{
+background:#12263d;
+transform:translateY(-3px);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+.stats-grid{
+grid-template-columns:1fr;
+}
+.info-grid{
+grid-template-columns:1fr;
+}
+}
+
+@media(max-width:768px){
+.header{
+flex-direction:column;
+gap:14px;
+}
+
+.profile-name{
+font-size:28px;
+}
+
+.avatar{
+width:90px;
+height:90px;
+font-size:36px;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div style="display:flex; gap:20px; background:#111; padding:15px;">
+    <a href="/home" style="color:white;">Home</a>
+    <a href="/movie" style="color:white;">Movies</a>
+    <a href="/favorites" style="color:white;">Favorites</a>
+    <a href="/profile" style="color:white;">Profile</a>
+    <a href="/about" style="color:white;">About</a>
+    <a href="/logout" style="color:red;">Logout</a>
+</div>
+
+<div class="header">
+<div class="logo" onclick="window.location.href='/'"> 🎬 Muvio<span>Dhamaka</span></div>
+<button class="back-btn" onclick="window.location.href='/'">⬅ Back to Home</button>
+</div>
+
+ 
+<div class="container">
+
+<!-- HERO -->
+<div class="profile-hero">
+
+<div class="profile-top">
+
+<div class="avatar">
+{{ user["username"][0]|upper if user and user["username"] else "U" }}
+</div>
+
+<div class="profile-meta">
+<h1 class="profile-name">{{ user["username"] if user else "Unknown User" }}</h1>
+<p class="profile-email">{{ user["email"] if user and user["email"] else "No email available" }}</p>
+
+<div class="profile-badges">
+<div class="badge">My Profile</div>
+<div class="badge red">Active User</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- STATS -->
+<div class="stats-grid">
+
+<div class="stat-card">
+<div class="stat-title">❤️ Total Favorites</div>
+<div class="stat-value">{{ fav_count }}</div>
+</div>
+
+ 
+
+<div class="stat-card">
+<div class="stat-title">📌 Status</div>
+<div class="stat-value" style="font-size:22px;">Active</div>
+</div>
+
+</div>
+
+<!-- ACCOUNT DETAILS -->
+<div class="section-card">
+<h2 class="section-title">Account Details</h2>
+
+<div class="info-grid">
+
+<div class="info-card">
+<div class="info-label">Username</div>
+<div class="info-value">{{ user["username"] if user else "N/A" }}</div>
+</div>
+
+<div class="info-card">
+<div class="info-label">Email Address</div>
+<div class="info-value">{{ user["email"] if user and user["email"] else "N/A" }}</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="section-card">
+<h2 class="section-title">Quick Actions</h2>
+
+<div class="actions">
+<button class="btn btn-home" onclick="window.location.href='/'">🏠 Home</button>
+<button class="btn btn-fav" onclick="window.location.href='/favorites'">❤️ Favorites</button>
+<button class="btn btn-logout" onclick="window.location.href='/logout'">🚪 Logout</button>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

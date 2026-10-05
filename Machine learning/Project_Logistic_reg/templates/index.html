@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Default Prediction</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 480px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4a47a3;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 14px;
+            margin-bottom: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102,126,234,0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .safe {
+            background: #e6fffa;
+            color: #0a6c59;
+        }
+
+        .danger {
+            background: #ffe6e6;
+            color: #b00020;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>💳 Loan Default Prediction</h2>
+
+    <form action="/predict" method="post">
+
+        <input type="number" name="Income" placeholder="💰 Income" required>
+        <input type="number" name="LoanAmount" placeholder="🏦 Loan Amount" required>
+        <input type="number" name="CreditScore" placeholder="📊 Credit Score" required>
+        <input type="number" name="MonthsEmployed" placeholder="📅 Months Employed" required>
+        <input type="number" name="NumCreditLines" placeholder="🔢 Credit Lines" required>
+        <input type="number" step="0.01" name="InterestRate" placeholder="📈 Interest Rate" required>
+        <input type="number" name="LoanTerm" placeholder="⏳ Loan Term (Months)" required>
+        <input type="number" step="0.01" name="DTIRatio" placeholder="⚖️ DTI Ratio" required>
+
+        <select name="Education" required>
+            <option value="">🎓 Education</option>
+            <option value="high school">High School</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="master">Master</option>
+        </select>
+
+        <select name="EmploymentType" required>
+            <option value="">💼 Employment Type</option>
+            <option value="salaried">Salaried</option>
+            <option value="self-employed">Self Employed</option>
+        </select>
+
+        <select name="MaritalStatus" required>
+            <option value="">💍 Marital Status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+        </select>
+
+        <select name="HasMortgage" required>
+            <option value="">🏠 Has Mortgage</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <select name="HasDependents" required>
+            <option value="">👨‍👩‍👧 Dependents</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <select name="LoanPurpose" required>
+            <option value="">🎯 Loan Purpose</option>
+            <option value="education">Education</option>
+            <option value="home">Home</option>
+            <option value="business">Business</option>
+        </select>
+
+        <select name="HasCoSigner" required>
+            <option value="">🤝 Co-Signer</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <button type="submit">🔍 Predict Loan Status</button>
+    </form>
+
+    {% if prediction %}
+        {% if prediction == "Loan Will Default" %}
+            <div class="result danger">❌ {{ prediction }}</div>
+        {% else %}
+            <div class="result safe">✅ {{ prediction }}</div>
+        {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+

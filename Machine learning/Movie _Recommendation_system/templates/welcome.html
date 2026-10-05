@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Welcome | Muvio</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:radial-gradient(circle at center,#020617,#0f172a,#020617);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:white;
+}
+
+/* Animated Background Glow */
+body::before{
+content:"";
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,rgba(0,200,255,0.35),transparent 70%);
+top:10%;
+left:10%;
+animation:moveGlow 8s infinite alternate ease-in-out;
+filter:blur(40px);
+}
+
+@keyframes moveGlow{
+0%{transform:translate(0,0);}
+100%{transform:translate(120px,80px);}
+}
+
+/* Main Container */
+.container{
+text-align:center;
+animation:zoomIn 1.5s ease;
+}
+
+@keyframes zoomIn{
+from{transform:scale(0.8); opacity:0;}
+to{transform:scale(1); opacity:1;}
+}
+
+/* Logo */
+.logo{
+font-size:60px;
+font-weight:bold;
+letter-spacing:3px;
+animation:glowText 2s infinite alternate;
+}
+
+.logo span{
+color:#00c8ff;
+text-shadow:0 0 25px #00c8ff;
+}
+
+/* Subtitle */
+.subtitle{
+margin-top:10px;
+font-size:18px;
+color:#aaa;
+letter-spacing:2px;
+animation:fadeIn 2s ease;
+}
+
+/* Loading dots */
+.loading{
+margin-top:25px;
+font-size:18px;
+letter-spacing:4px;
+}
+
+.loading span{
+animation:blink 1.5s infinite;
+}
+
+.loading span:nth-child(2){
+animation-delay:0.2s;
+}
+.loading span:nth-child(3){
+animation-delay:0.4s;
+}
+
+@keyframes blink{
+0%,100%{opacity:0.2;}
+50%{opacity:1;}
+}
+
+/* Animations */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes glowText{
+from{text-shadow:0 0 10px #00c8ff;}
+to{text-shadow:0 0 35px #00c8ff;}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<a href="/account">Get Started</a>    
+
+<div class="container">
+
+<div class="logo">
+Muvio <span>🎬</span>
+</div>
+
+<div class="subtitle">
+Your Movie Universe
+</div>
+
+<div class="loading">
+<span>.</span><span>.</span><span>.</span>
+</div>
+
+</div>
+
+<script>
+
+// 4 sec ke baad redirect
+setTimeout(()=>{
+window.location.href="/"
+},4000)
+
+</script>
+
+</body>
+</html>

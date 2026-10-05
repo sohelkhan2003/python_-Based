@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SVM Product Category Predictor</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:linear-gradient(120deg,#dbeafe,#f4f6f9);
+}
+
+.container{
+width:450px;
+margin:auto;
+margin-top:40px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+h2{
+text-align:center;
+color:#1e40af;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:10px;
+color:#333;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:15px;
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:15px;
+padding:12px;
+background:#eef3ff;
+border-left:5px solid #2563eb;
+}
+
+.confidence{
+color:green;
+font-weight:bold;
+}
+
+.error{
+margin-top:15px;
+padding:10px;
+background:#ffe4e6;
+border-left:5px solid red;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>SVM Product Category Classification</h2>
+
+<form action="/predict" method="post">
+
+<label>Quantity</label>
+<input type="number" name="quantity" required>
+
+<label>Unit Price</label>
+<input type="number" step="any" name="unit_price" required>
+
+<label>Purchase Price</label>
+<input type="number" step="any" name="purchase_price" required>
+
+<label>Revenue</label>
+<input type="number" step="any" name="revenue" required>
+
+<label>Profit</label>
+<input type="number" step="any" name="profit" required>
+
+<button type="submit">Predict Category</button>
+
+</form>
+
+{% if prediction %}
+<div class="result">
+<b>Predicted Category:</b><br>
+{{ prediction }}<br><br>
+<span class="confidence">Confidence: {{ confidence }}</span>
+</div>
+{% endif %}
+
+{% if error %}
+<div class="error">
+Error: {{ error }}
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
+
